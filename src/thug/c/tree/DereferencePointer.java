@@ -8,23 +8,23 @@ import thug.c.core.TypingEnvironment.TypeException;
 import thug.c.types.PointerType;
 
 public class DereferencePointer extends Expression {
-  public final Expression expr;
+   public final Expression expr;
 
-  public DereferencePointer(Expression expr) {
-    this.expr = expr;
-  }
+   public DereferencePointer(Expression expr) {
+      this.expr = expr;
+   }
 
-  public void compileC(StringBuilder sb, CompileContext cc) {
-    sb.append("&");
-    this.expr.compileC(sb, cc);
-  }
+   public void compileC(StringBuilder sb, CompileContext cc) {
+      sb.append("&");
+      this.expr.compileC(sb, cc);
+   }
 
-  public void compileSelf(StringBuilder sb, CompileContext cc) {
-    sb.append("&");
-    this.expr.compileSelf(sb, cc);
-  }
-  
-  public Type getTypeHard(TypingEnvironment e) throws TypeException {
-    return new PointerType(expr.getType(e));
-  }
+   public void compileSelf(StringBuilder sb, CompileContext cc) {
+      sb.append("&");
+      this.expr.compileSelf(sb, cc);
+   }
+
+   public Type getTypeHard(TypingEnvironment e) throws TypeException {
+      return new PointerType(expr.getType(e));
+   }
 }
