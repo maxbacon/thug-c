@@ -61,6 +61,9 @@ typ returns [Type typ]
 
 structDef returns [StructDefinition sdef]
         : 'struct' n=ID {$sdef = new StructDefinition($n.text);}
+           ('<'
+              arg=ID {$sdef.addGenericUnknown($arg.text);}
+           '>')?
            ('telescopes' ex=ID {$sdef.setParent($ex.text);})?
         '{'
             (t=typ lbl=ID  {$sdef.add($lbl.text, $t.typ);}

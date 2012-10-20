@@ -31,6 +31,10 @@ public class StructDefinition extends GlobalScopeDefn {
     this.refType = new StructReferenceType(name);
     this.uid = TYPE_UID.incrementAndGet();
   }
+  
+  public void addGenericUnknown(String arg) {
+	  throw new IllegalStateException("not supported yet");
+  }
 
   public void setParent(String parent) {
     this.parent.set(parent);
