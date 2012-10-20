@@ -31,18 +31,24 @@ public class Allocate extends Expression {
 				sb.append("1");
 			}
 			sb.append(")");
+		} else {
+			throw new IllegalStateException("gosh, I'm lazy");
 		}
+
 	}
 
 	public void compileSelf(StringBuilder sb, CompileContext cc) {
-		if (type instanceof StructReferenceType) {
-			String structName = ((StructReferenceType) type).name;
-			sb.append("new " + structName);
-			if (arity.get() != null) {
-				sb.append("[");
-				arity.get().compileSelf(sb, cc);
-				sb.append("]");
-			}
+		boolean shouldWrap = type instanceof PointerType;
+		sb.append("new ");
+		if (shouldWrap)
+			sb.append("[");
+		sb.append(type.getSelfTypeString());
+		if (shouldWrap)
+			sb.append("]");
+		if (arity.get() != null) {
+			sb.append("[");
+			arity.get().compileSelf(sb, cc);
+			sb.append("]");
 		}
 	}
 
