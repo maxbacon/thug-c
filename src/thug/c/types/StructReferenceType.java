@@ -6,9 +6,9 @@ import thug.c.core.Type;
 import thug.c.core.TypingEnvironment;
 
 public class StructReferenceType implements Type {
-	final String name;
+	public final String name;
 
-	final ArrayList<Type> genericTypeParameters = new ArrayList<>();
+	public final ArrayList<Type> genericTypeParameters = new ArrayList<>();
 
 	public StructReferenceType(String name) {
 		this.name = name;

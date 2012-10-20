@@ -25,9 +25,9 @@ typF returns [FunctionalType typ]
 /*
   The Core Types
 */
+
 typ0 returns [Type typ]
-	: 'void' {$typ = new CoreTypes.VoidType();}
-	| 'bool' {$typ = new CoreTypes.BooleanType();}
+	: 'bool' {$typ = new CoreTypes.BooleanType();}
 	| 'char' {$typ = new CoreTypes.Char8Type();}
 	| 'short' {$typ = new CoreTypes.Short16Type();}
 	| 'int' {$typ = new CoreTypes.Integer32Type();}
@@ -52,10 +52,16 @@ typ0 returns [Type typ]
 	   ('<'
 	      gt=typ { ((StructReferenceType)$typ).addGenericTypeInstance($gt.typ); }
 	   '>')?)
+    | '[' gt=typ ']' {$typ=$gt.typ;}
+    ;
+    
+typ1 returns [Type typ]
+	:  'void' {$typ = new CoreTypes.VoidType();}
+	   | a=typ0 {$typ=$a.typ;}
 	;
 
 typ returns [Type typ]
-     	: t=typ0 { $typ=$t.typ; } 
+     	: t=typ1 { $typ=$t.typ; } 
      	  ('*' {$typ = new PointerType($typ);})*
      	;
 
@@ -110,7 +116,7 @@ expr2 returns [Expression expr]
 	| c=CHAR   {$expr = new Constant($c.text, Constant.ConstantType.Character);}
 	| 'true' {$expr = new Constant("1", Constant.ConstantType.Character); }
 	| 'false' {$expr = new Constant("0", Constant.ConstantType.Character); }
-	| 'new' id=ID { $expr=new Allocate($id.text); }
+	| 'new' at=typ0 { $expr=new Allocate($at.typ); }
 	   ('[' e2=expr ']' { ((Allocate)$expr).setArity($e2.expr);  })?
 	| cc=closur {$expr=$cc.af;}
 	| '&' e=expr1 {$expr=new DereferencePointer($e.expr);}
