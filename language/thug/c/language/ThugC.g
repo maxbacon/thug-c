@@ -205,6 +205,7 @@ stmt returns [Statement s]
  	    ';'
  	| 'return' {$s=new Return();}
  	    (v=expr {((Return)$s).setReturnValue($v.expr);} )? ';'
+ 	| 'delete' v=expr ';' {$s=new Free($v.expr);}
  	| 'if' '(' e=expr ')' bT=block {$s = new IfThenElse($e.expr, $bT.b);}
  	  ('else' bF=block {((IfThenElse)$s).setFalseStatement($bF.b);})?
  	| 'while' '(' e=expr ')' bT=block {$s = new WhileLoop($e.expr, $bT.b);}

@@ -14,7 +14,7 @@ public class CompileContext {
 
    public CompileContext(String packageName) {
       this.packageName = packageName;
-      _TAB = Constants.TAB.get();
+      _TAB = Constants.TAB.get() == null ? "  " : Constants.TAB.get();
    }
 
    public void neuterNextTab() {
