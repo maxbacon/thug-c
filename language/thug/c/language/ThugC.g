@@ -12,7 +12,6 @@ import thug.c.tree.*;
 import thug.c.types.*;}
 @lexer::header {package thug.c.language;}
 
-
 typF returns [FunctionalType typ]
     : '#' '(' {$typ = new FunctionalType(true);}
        (
@@ -49,7 +48,10 @@ typ0 returns [Type typ]
 	             | 'long' {$typ = new CoreTypes.UnsignedLong64Type();}
 	             )
 	| t=typF {$typ=$t.typ;}
-	| n=ID {$typ = new StructReferenceType($n.text);}
+	| (n=ID {$typ = new StructReferenceType($n.text);}
+	   ('<'
+	      gt=typ { ((StructReferenceType)$typ).addGenericTypeInstance($gt.typ); }
+	   '>')?)
 	;
 
 typ returns [Type typ]

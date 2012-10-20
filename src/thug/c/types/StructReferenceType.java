@@ -1,23 +1,31 @@
 package thug.c.types;
 
+import java.util.ArrayList;
+
 import thug.c.core.Type;
 import thug.c.core.TypingEnvironment;
 
 public class StructReferenceType implements Type {
-  final String name;
+	final String name;
 
-  public StructReferenceType(String name) {
-    this.name = name;
-  }
+	final ArrayList<Type> genericTypeParameters = new ArrayList<>();
 
-  public String getCTypeString() {
-    return "GC_STRUCT_" + name.toUpperCase();
-  }
+	public StructReferenceType(String name) {
+		this.name = name;
+	}
 
-  public String getSelfTypeString() {
-    return this.name;
-  }
+	public void addGenericTypeInstance(Type t) {
+		throw new IllegalStateException("Not supported... yet");
+	}
 
-  public void register(TypingEnvironment env) {
-  }
+	public String getCTypeString() {
+		return "GC_STRUCT_" + name.toUpperCase();
+	}
+
+	public String getSelfTypeString() {
+		return this.name;
+	}
+
+	public void register(TypingEnvironment env) {
+	}
 }
