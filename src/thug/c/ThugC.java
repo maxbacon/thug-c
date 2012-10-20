@@ -13,6 +13,7 @@ import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import thug.c.core.CompileContext;
+import thug.c.core.Constants;
 import thug.c.core.Script;
 import thug.c.language.ThugCLexer;
 import thug.c.language.ThugCParser;
@@ -44,6 +45,7 @@ public class ThugC {
 		String output = new File(args.getRequiredArg("output")).getCanonicalPath();
 		System.out.println("INPUT:" + input);
 		System.out.println("OUTPUT:" + output);
+		Constants.TAB.set("   ");
 		
 		File[] files = new File(input).listFiles(new FilenameFilter() {
 			public boolean accept(File arg0, String filename) {
